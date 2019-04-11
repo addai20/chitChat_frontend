@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+UPDATED GITHUB REPO FOR BETTER TRACKING
 
 ## Available Scripts
-TESTING CONNECTION
 In the project directory, you can run:
 
 ### `npm start`
