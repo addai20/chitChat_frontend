@@ -3,19 +3,32 @@ import Message from '../components/Message'
 
 class MessagesBox extends Component {
   render(){
+    console.log(this.props);
     return(
       <div className="messagesBox">
-        {this.props.messages ? this.props.messages.filter((msg) => msg.sender_id === this.props.currentUser.id || msg.receiver_id === this.props.currentUser.id).map((msg)=>{
+        {this.props.selectedUser.id ? this.props.messages.map((msg)=>{
           return (
-          <div>
+            this.props.currentUser.id === msg.sender_id ?
+
             <Message
+              className="messageSent"
               key={msg.id}
               sender={msg.sender_id}
               receiver={msg.receiver_id}
               text={msg.text_body}
               deleteMessage={this.props.deleteMessage}
             />
-          </div>
+          :
+
+          <Message
+            className="messageRcvd"
+            key={msg.id}
+            sender={msg.sender_id}
+            receiver={msg.receiver_id}
+            text={msg.text_body}
+            deleteMessage={this.props.deleteMessage}
+          />
+
         )
 
       })
@@ -26,3 +39,12 @@ class MessagesBox extends Component {
 }
 
 export default MessagesBox
+
+// <Message
+//   className="messageSent"
+//   key={msg.id}
+//   sender={msg.sender_id}
+//   receiver={msg.receiver_id}
+//   text={msg.text_body}
+//   deleteMessage={this.props.deleteMessage}
+// />

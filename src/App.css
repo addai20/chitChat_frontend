@@ -64,6 +64,22 @@
 
 }
 
+.message {
+  display: flex;
+  flex-direction: row;
+}
+
+.messageSent {
+  display: flex;
+  flex-direction: row;
+
+}
+
+.messageRcvd {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 .header {
   display: flex;
   justify-content: flex-start;
@@ -85,5 +101,5 @@ overflow-y: scroll;
 .subContent {
   display: flex;
   flex-direction: row;
-  
+
 }

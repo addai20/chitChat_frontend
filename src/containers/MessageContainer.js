@@ -12,6 +12,7 @@ class MessageContainer extends Component{
     return(
       <div>
         <MessagesBox
+          selectedUser={this.props.selectedUser}
           messages={this.props.messages}
           currentUser={this.props.currentUser}
           deleteMessage={this.props.deleteMessage}
@@ -24,7 +25,11 @@ class MessageContainer extends Component{
               <button className="btn btn-outline-secondary" type="button" onClick={()=>this.props.messageSender()} id="button-addon2">Send</button>
             </div>
         </div>
-        <TranslationContainer/>
+        <TranslationContainer
+          queryTranslateApi={this.props.queryTranslateApi}
+          translationText={this.props.translationText}
+          translationHandler={this.props.translationHandler}
+        />
       </div>
     )
   }

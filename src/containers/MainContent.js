@@ -15,6 +15,7 @@ class MainContent extends Component {
       currentMessage: "",
       selectedUser: {},
       allUsers: [],
+      translationText: "",
       currentConversation: {}
     }
   }
@@ -54,6 +55,52 @@ class MainContent extends Component {
     })
   }
 
+
+
+ //  ? key=<API key>
+ // & text=<text to translate>
+ // & lang=<translation direction>
+ // & [format=<text format>]
+ // & [options=<translation options>]
+ // & [callback=<name of the callback function>]
+
+  translationHandler = (e)=> {
+    // refactor this method to only update the translation text
+    // update state to include typed text for translationText
+
+    let input = e.target.value
+
+    this.setState({translationText: input})
+  }
+
+  queryTranslateApi = ()=>{
+    console.log('queryTranslateApi invoked!');
+
+    const url = `https://translate.yandex.net/api/v1.5/tr.json/translate`
+    const key = `trnsl.1.1.20190412T160028Z.b3144093501b2817.c20a5121c33779f2470ca54177a5b3c3ccba3b3a`
+
+    let text = this.state.translationText
+
+    let lang;
+    if (this.state.currentUser.desired_language === "English"){
+      lang = `en-es`
+    } else {
+      lang = `es-en`
+    }
+
+    debugger
+    let format = `plain`
+
+    fetch(`${url}?key=${key}&text=${text}&lang=${lang}`)
+    .then(resp=>{
+      return resp.json()
+    })
+    .then((transText)=>{
+      console.log(transText)
+      debugger
+      this.setState({translationText: transText[text]})
+    })
+  }
   friendClickHandler = (userObj) =>{
     console.log(userObj);
     console.log("friendClickHandler invoked!");
@@ -75,7 +122,10 @@ class MainContent extends Component {
 
     // debugger
 
-    this.setState({messages: filteredMsgs})
+    this.setState({
+      messages: filteredMsgs,
+      selectedUser: userObj
+    })
 
     // return filteredMsgs
   }
@@ -85,6 +135,7 @@ class MainContent extends Component {
     debugger
   }
 
+//handles the composition of a message
   messageHandler = (e) => {
     console.log(e);
     // debugger
@@ -96,32 +147,51 @@ class MainContent extends Component {
     // let message = event.target.parentElement.parentElement.children[0].value
   }
 
+  langToggler = ()=> {
+    let fluentLang = this.state.currentUser.native_Language
+
+    // displayed text should be toggled based upon native_Language
+    // consider changing the backend structure of lang to match expectations of
+  }
+
+//handles the sending of a message to a recipient
   messageSender = () =>{
     console.log("messageSender Invoked!");
 
+    let selectedUser = this.state.selectedUser
+
+    if (selectedUser.id){
+      let recipient = this.state.selectedUser.id
+      let message = this.state.currentMessage
+      let sender = this.state.currentUser.id
+      let data = {receiver_id: recipient, seen: false, sender_id: sender, text_body: message}
+
+      fetch('http://localhost:3000/users/1/messages', {
+        method:'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res=>res.json())
+      .then(response => {
+        console.log('Success')
+        let copyOfMsgs = [...this.state.messages]
+        copyOfMsgs.push(response)
+
+        this.setState({messages: copyOfMsgs})
+      })
+      .catch(error => console.error('Error', error));
+
+      // erase current message after sending
+      this.setState({currentMessage: ""})
+
+    } else {
+      alert("Please select a recipient!")
+
+    }
+
     // capture current message & sender from state
-    let message = this.state.currentMessage
-    let sender = this.state.currentUser.id
-    let data = {receiver_id: 2, seen: false, sender_id: sender, text_body: message}
 
-    fetch('http://localhost:3000/users/1/messages', {
-      method:'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res=>res.json())
-    .then(response => {
-      console.log('Success')
-      let copyOfMsgs = [...this.state.messages]
-      copyOfMsgs.push(response)
-
-      this.setState({messages: copyOfMsgs})
-    })
-    .catch(error => console.error('Error', error));
-
-    // erase current message after sending
-    this.setState({currentMessage: ""})
   }
 
 
@@ -139,6 +209,9 @@ class MainContent extends Component {
           currentUser={this.state.currentUser}
         />
         <MessageContainer
+          translationHandler={this.translationHandler}
+          translationText={this.state.translationText}
+          selectedUser={this.state.selectedUser}
           deleteMessage={this.deleteMessage}
           messageHandler={this.messageHandler}
           messages={this.state.messages}
@@ -146,6 +219,7 @@ class MainContent extends Component {
           currentMessage={this.state.currentMessage}
           messageSender={this.messageSender}
           currentUser={this.state.currentUser}
+          queryTranslateApi={this.queryTranslateApi}
 
         />
 
