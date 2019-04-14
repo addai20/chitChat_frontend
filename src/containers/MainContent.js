@@ -82,6 +82,8 @@ class MainContent extends Component {
     let text = this.state.translationText
 
     let lang;
+
+    // NEEDS TO BE MORE DYNAMIC TO ACCOMODATE MULTIPLE LANGUAGES
     if (this.state.currentUser.desired_language === "English"){
       lang = `en-es`
     } else {
@@ -98,9 +100,11 @@ class MainContent extends Component {
     .then((transText)=>{
       console.log(transText)
       debugger
-      this.setState({translationText: transText[text]})
+      this.setState({translationText: transText.text[0]})
     })
   }
+
+
   friendClickHandler = (userObj) =>{
     console.log(userObj);
     console.log("friendClickHandler invoked!");

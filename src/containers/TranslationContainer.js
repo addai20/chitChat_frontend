@@ -19,10 +19,12 @@ class TranslationContainer extends Component {
 
         <div>
           <textarea rows="4" cols="25" placeholder="Desired language"
-            value={_.debounce(()=>this.props.queryTranslateApi(this.props.translationText), 500, { leading: true })}
+            value={this.props.translationText}
+            onChange={null}
+
 
             />
-          <button onClick={()=>this.props.queryTranslateApi()}/>
+          <button onClick={()=>this.props.queryTranslateApi()}>Translate</button>
         </div>
 
 

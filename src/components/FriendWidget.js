@@ -9,7 +9,7 @@ class FriendWidget extends Component {
           <img className="ui mini circular image" src="http://icons.iconarchive.com/icons/papirus-team/papirus-status/64/avatar-default-icon.png"/>
           <div className="content">
             <div className="ui sub header">{`${this.props.userInfo.first_name} ${this.props.userInfo.last_name[0]}.`}</div>
-            {`Learning: ${this.props.userInfo.native_language}`}
+            {`Learning: ${this.props.userInfo.desired_language}`}
           </div>
       </div>
     )
