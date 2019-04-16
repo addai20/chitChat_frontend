@@ -10,9 +10,19 @@ class Header extends Component {
           </img>
           {this.props.currentUser.first_name}
         </h2>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+          onClick={this.props.openModal}>
+          Launch demo modal
+        </button>
       </div>
     )
   }
 }
 
 export default Header
+
+
+
+
+//THIS BUTTON/ONCLICK SHOULD BE MOVED TO THE MODAL ITSELF
+// <button onClick={()=>this.props.editUser()}>edit</button>

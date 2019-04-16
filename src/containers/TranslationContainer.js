@@ -5,10 +5,11 @@ import TranslationBox from '../components/TranslationBox'
 class TranslationContainer extends Component {
 
   render(){
+    console.log(this.props.sourceLang);
     return(
       <div className="TranslationContainer">
         <div>
-          <textarea rows="4" cols="25" placeholder="Source language"
+          <textarea rows="4" cols="25" placeholder={`Source Language: ${this.props.desiredLang}`}
             onChange={(e)=>this.props.translationHandler(e)}
             />
           <button onClick={null}/>
@@ -18,7 +19,7 @@ class TranslationContainer extends Component {
 
 
         <div>
-          <textarea rows="4" cols="25" placeholder="Desired language"
+          <textarea rows="4" cols="25" placeholder={`Desired Language: ${this.props.sourceLang}`}
             value={this.props.translationText}
             onChange={null}
 

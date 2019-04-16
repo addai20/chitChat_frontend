@@ -9,8 +9,9 @@ class MessageContainer extends Component{
   }
 
   render(){
+    console.log(this.props.sourceLang);
     return(
-      <div>
+      <div className="messagesBox">
         <MessagesBox
           selectedUser={this.props.selectedUser}
           messages={this.props.messages}
@@ -24,11 +25,16 @@ class MessageContainer extends Component{
             <div className="input-group-append">
               <button className="btn btn-outline-secondary" type="button" onClick={()=>this.props.messageSender()} id="button-addon2">Send</button>
             </div>
+            <div className="input-group-append">
+              <button className="btn btn-outline-secondary" type="button" onClick={()=>this.props.messageSender()} id="button-addon2">Save Word</button>
+            </div>
         </div>
         <TranslationContainer
           queryTranslateApi={this.props.queryTranslateApi}
           translationText={this.props.translationText}
           translationHandler={this.props.translationHandler}
+          sourceLang={this.props.sourceLang}
+          desiredLang={this.props.desiredLang}
         />
       </div>
     )

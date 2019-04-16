@@ -53,7 +53,8 @@
 
 } */
 
-.messagesBox {
+
+/* .messagesBox {
 
   display: flex;
   flex-direction: column;
@@ -62,12 +63,13 @@
   padding-right: 5%;
   overflow-y: scroll;
 
-}
+} */
 
-.message {
+/* message deprecated */
+/* .message {
   display: flex;
   flex-direction: row;
-}
+} */
 
 .messageSent {
   display: flex;
@@ -102,4 +104,22 @@ overflow-y: scroll;
   display: flex;
   flex-direction: row;
 
+}
+
+
+/* new styling from w3Schools */
+.container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
 }

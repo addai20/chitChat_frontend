@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+// import { Container, Button, Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Header from '../components/Header'
 import MessageContainer from '../containers/MessageContainer'
 import FriendsList from '../containers/FriendsList'
+// import EditModal from '../components/EditModal'
 
 class MainContent extends Component {
   //does state need to live here as well??
@@ -21,17 +23,6 @@ class MainContent extends Component {
   }
 
   componentDidMount(){
-    // messages are statically fetched for skateboard
-
-    // fetch('http://localhost:3000/users/1/messages')
-    //   .then((resp)=>{
-    //     return resp.json()
-    //   })
-    //   .then((messages)=>{
-    //     console.log(messages);
-    //     this.setState({messages: messages})
-    //   })
-
     // Promise.all allows multiple fetches to be done simultaneously, see below link
     // https://medium.com/@ahnahn.un/a-brief-intro-to-promise-all-92291d93780c
     Promise.all([
@@ -73,9 +64,69 @@ class MainContent extends Component {
     this.setState({translationText: input})
   }
 
-  queryTranslateApi = ()=>{
-    console.log('queryTranslateApi invoked!');
+  getLangDirection(){
 
+    let state = this.state
+    console.log(state);
+    // get native and desired languages and store in a variable
+    let native = this.state.currentUser.native_language
+    let desired = this.state.currentUser.desired_language
+    let start;
+    let finish;
+    let result;
+
+    switch (native) {
+      // case native === 'English':
+      //   start = 'en'
+      //   break;
+      case native === 'Spanish':
+        start = 'es'
+        break;
+      case native === 'French':
+        start = 'fr'
+        break;
+      case native === 'Portuguese':
+        start = 'pt'
+        break;
+      case native === 'Italian':
+        start = 'it'
+        break;
+      case native === 'German':
+        start = 'ge'
+        break;
+      default: start = 'en'
+    }
+
+    switch (desired) {
+      case desired === 'English':
+        finish = 'en'
+        break;
+      case desired === 'Spanish':
+        finish = 'es'
+        break;
+      case desired === 'French':
+        finish = 'fr'
+        break;
+      case desired === 'Portuguese':
+        finish = 'pt'
+        break;
+      case desired === 'Italian':
+        finish = 'it'
+        break;
+      case desired === 'German':
+        finish = 'ge'
+        break;
+      default:
+    }
+
+  result = `${start}-${finish}`
+  debugger
+    return result
+  }
+
+  queryTranslateApi = ()=>{
+    // console.log('queryTranslateApi invoked!');
+    console.log(this.getLangDirection());
     const url = `https://translate.yandex.net/api/v1.5/tr.json/translate`
     const key = `trnsl.1.1.20190412T160028Z.b3144093501b2817.c20a5121c33779f2470ca54177a5b3c3ccba3b3a`
 
@@ -136,7 +187,7 @@ class MainContent extends Component {
 
   deleteMessage = (e) => {
     console.log("deleteMessage Invoked", e);
-    debugger
+    // debugger
   }
 
 //handles the composition of a message
@@ -198,6 +249,23 @@ class MainContent extends Component {
 
   }
 
+  wordSaver = ()=>{
+    debugger
+  }
+
+  openModal = ()=>{
+    console.log("openModal Invoked!");
+    debugger
+  }
+
+  editUser = ()=>{
+    console.log("editUser invoked!");
+      //this method should perform a PUT fetch to the backend
+    // Get Current User
+    let userId = this.state.currentUser.id
+    debugger
+  }
+
 
 
   render(){
@@ -205,6 +273,8 @@ class MainContent extends Component {
       <div className="mainContent" >
         <Header className="header"
           currentUser={this.state.currentUser}
+          editUser={this.editUser}
+          openModal={this.openModal}
         />
       <div className="subContent">
         <FriendsList
@@ -212,6 +282,7 @@ class MainContent extends Component {
           friendClickHandler={this.friendClickHandler}
           currentUser={this.state.currentUser}
         />
+
         <MessageContainer
           translationHandler={this.translationHandler}
           translationText={this.state.translationText}
@@ -224,6 +295,8 @@ class MainContent extends Component {
           messageSender={this.messageSender}
           currentUser={this.state.currentUser}
           queryTranslateApi={this.queryTranslateApi}
+          sourceLang={this.state.currentUser.native_language}
+          desiredLang={this.state.currentUser.desired_language}
 
         />
 
