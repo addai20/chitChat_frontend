@@ -11,8 +11,8 @@ class Header extends Component {
           {this.props.currentUser.first_name}
         </h2>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-          onClick={this.props.openModal}>
-          Launch demo modal
+          onClick={this.props.toggleModal}>
+          Edit User
         </button>
       </div>
     )

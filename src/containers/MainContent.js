@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-// import { Container, Button, Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Container, Button, Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Header from '../components/Header'
 import MessageContainer from '../containers/MessageContainer'
 import FriendsList from '../containers/FriendsList'
-// import EditModal from '../components/EditModal'
+import UpdateUserForm from '../components/UpdateUserForm'
+import apiKey from '../secrets.js'
 
 class MainContent extends Component {
   //does state need to live here as well??
@@ -18,6 +19,11 @@ class MainContent extends Component {
       selectedUser: {},
       allUsers: [],
       translationText: "",
+      inputFirstName: "",
+      inputLastName: "",
+      inputNative: "",
+      inputDesired: "",
+      modalShown: false,
       currentConversation: {}
     }
   }
@@ -128,7 +134,6 @@ class MainContent extends Component {
     // console.log('queryTranslateApi invoked!');
     console.log(this.getLangDirection());
     const url = `https://translate.yandex.net/api/v1.5/tr.json/translate`
-    const key = `trnsl.1.1.20190412T160028Z.b3144093501b2817.c20a5121c33779f2470ca54177a5b3c3ccba3b3a`
 
     let text = this.state.translationText
 
@@ -144,7 +149,7 @@ class MainContent extends Component {
     debugger
     let format = `plain`
 
-    fetch(`${url}?key=${key}&text=${text}&lang=${lang}`)
+    fetch(`${url}?key=${apiKey}&text=${text}&lang=${lang}`)
     .then(resp=>{
       return resp.json()
     })
@@ -253,17 +258,36 @@ class MainContent extends Component {
     debugger
   }
 
-  openModal = ()=>{
-    console.log("openModal Invoked!");
+  toggleModal = ()=>{
+    console.log("toggleModal Invoked!");
+    // get current state of modalShown
+    let modal = this.state.modalShown
+    modal = !(modal)
+
+    this.setState({modalShown: modal})
     debugger
   }
 
-  editUser = ()=>{
-    console.log("editUser invoked!");
+  cancelModal = ()=>{
+
+  }
+
+  updateUser = (e)=>{
+    console.log("updateUser invoked!");
       //this method should perform a PUT fetch to the backend
     // Get Current User
     let userId = this.state.currentUser.id
     debugger
+  }
+
+  formOnChange =(e, stateKey) =>{
+    console.log("formChange invoked!");
+    let text = e.currentTarget.value
+    // debugger
+
+    this.setState({[stateKey]: text})
+
+
   }
 
 
@@ -273,8 +297,8 @@ class MainContent extends Component {
       <div className="mainContent" >
         <Header className="header"
           currentUser={this.state.currentUser}
-          editUser={this.editUser}
-          openModal={this.openModal}
+          updateUser={this.updateUser}
+          toggleModal={this.toggleModal}
         />
       <div className="subContent">
         <FriendsList
@@ -282,6 +306,26 @@ class MainContent extends Component {
           friendClickHandler={this.friendClickHandler}
           currentUser={this.state.currentUser}
         />
+
+      <Modal isOpen={this.state.modalShown}>
+        <ModalHeader toggle={()=>this.toggleModal()}>Edit User</ModalHeader>
+        <ModalBody>
+          <UpdateUserForm
+            formOnChange={this.formOnChange}
+            inputFirstName={this.state.inputFirstName}
+            inputLastName={this.state.inputLastName}
+            inputNative={this.state.inputNative}
+            inputDesired={this.state.inputDesired}
+
+
+            updateUser={this.updateUser}
+          />
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" >Update</Button>
+          <Button color="secondary" onClick={()=>this.toggleModal()}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
 
         <MessageContainer
           translationHandler={this.translationHandler}
