@@ -275,9 +275,35 @@ class MainContent extends Component {
   updateUser = (e)=>{
     console.log("updateUser invoked!");
       //this method should perform a PUT fetch to the backend
-    // Get Current User
+    // Get Current User id
     let userId = this.state.currentUser.id
+    // Get all form values from this.state
+    let first = this.state.inputFirstName
+    let last = this.state.inputLastName
+    let native = this.state.inputNative
+    let desired =this.state.inputDesired
+
+    let data = {
+      desired_language: desired,
+      first_name: first,
+      last_name: last,
+      native_language: native}
+
     debugger
+
+    fetch(`http://localhost:3000/users/${userId}`,{
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers:{
+
+      'Content-Type': 'application/json'
+    }
+  }).then(res=> res.json())
+  .then(response => console.log('Success:', JSON.stringify(response)))
+  .catch(error => console.error('Error:', error));
+
+  this.toggleModal()
+
   }
 
   formOnChange =(e, stateKey) =>{
@@ -316,8 +342,6 @@ class MainContent extends Component {
             inputLastName={this.state.inputLastName}
             inputNative={this.state.inputNative}
             inputDesired={this.state.inputDesired}
-
-
             updateUser={this.updateUser}
           />
         </ModalBody>
