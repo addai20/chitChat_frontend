@@ -2,6 +2,19 @@ import React, { Component } from 'react';
 import Message from '../components/Message'
 
 class MessagesBox extends Component {
+
+  formatTime = (time) =>{
+    //take in a the time created and return only the time
+    //EXAMPLE TIME 2019-04-18T00:21:38.855Z
+
+    let arr = time.split(':')
+    let hours = arr[1]
+    let minutes = arr[2]
+
+    return `${hours}:${minutes.split(".")[0]}`
+
+  }
+
   render(){
     console.log(this.props);
     return(
@@ -13,7 +26,7 @@ class MessagesBox extends Component {
             <div className="container">
               <img src="http://icons.iconarchive.com/icons/papirus-team/papirus-status/64/avatar-default-icon.png" alt="Avatar"/>
               <p>{msg.text_body}</p>
-              <span className="time-right">11:00</span>
+              <span className="time-right">{this.formatTime(msg.created_at)}</span>
             </div>
 
           :
@@ -21,13 +34,13 @@ class MessagesBox extends Component {
           <div className="container darker">
             <img src="http://icons.iconarchive.com/icons/papirus-team/papirus-status/64/avatar-default-icon.png" alt="Avatar"/>
             <p>{msg.text_body}</p>
-            <span className="time-right">11:00</span>
+            <span className="time-right">{this.formatTime(msg.created_at)}</span>
           </div>
 
         )
 
       })
-    : null}
+    :  null}
       </div>
     )
   }

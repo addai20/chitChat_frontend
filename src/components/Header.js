@@ -10,7 +10,7 @@ class Header extends Component {
           </img>
           {this.props.currentUser.first_name}
         </h2>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
           onClick={this.props.toggleModal}>
           Edit User
         </button>

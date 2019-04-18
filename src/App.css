@@ -54,16 +54,17 @@
 } */
 
 
-/* .messagesBox {
+.messagesBox {
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  max-height: 23%;
+  /* justify-content: flex-end; */
+  max-height: 40vh;
   padding-right: 5%;
+  padding-top: 2%;
   overflow-y: scroll;
 
-} */
+}
 
 /* message deprecated */
 /* .message {
@@ -94,9 +95,10 @@
 
 .friendsList {
 padding-top: 2%;
-width: 15%;
+width: 25%;
 /* height: 1%; */
 overflow-y: scroll;
+max-height: 60vh;
 
 }
 
@@ -119,7 +121,19 @@ overflow-y: scroll;
   margin: 10px 0;
 }
 
-.darker {
+/* .darker {
   border-color: #ccc;
   background-color: #ddd;
+} */
+
+.darker {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  border: 2px solid #dedede;
+  border-color: #ccc;
+  background-color: #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
 }

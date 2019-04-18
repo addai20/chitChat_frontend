@@ -8,8 +8,8 @@ class FriendsList extends Component {
 
       <div className ="friendsList">
 
-        <div className="ui horizontal list"> Radio Buttons Here </div>
-        // NOTE: map through friends list here
+
+
         {this.props.allUsers.filter(u => u.id != this.props.currentUser.id).map((usr)=>{
           return(
             <FriendWidget
@@ -26,3 +26,15 @@ class FriendsList extends Component {
 }
 
 export default FriendsList
+// Tried to make a radio Group to filter out the friends by language
+// <div className="ui horizontal list">
+//   <radioGroup>
+//     <input type="radio" name="sort" value="English">test 1</input>
+//     <input type="radio" name="sort" value="German">test 2</input>
+//     <input type="radio" name="sort" value="Spanish">test 3</input>
+//     <input type="radio" name="sort" value="French">test 3</input>
+//     <input type="radio" name="sort" value="Italian">test 3</input>
+//     <input type="radio" name="sort" value="Portuguese">test 3</input>
+//
+//   </radioGroup>
+// </div>

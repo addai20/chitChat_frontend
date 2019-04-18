@@ -11,7 +11,7 @@ class MessageContainer extends Component{
   render(){
     console.log(this.props.sourceLang);
     return(
-      <div className="messagesBox">
+      <div >
         <MessagesBox
           selectedUser={this.props.selectedUser}
           messages={this.props.messages}

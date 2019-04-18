@@ -9,7 +9,7 @@ class TranslationContainer extends Component {
     return(
       <div className="TranslationContainer">
         <div>
-          <textarea rows="4" cols="25" placeholder={`Source Language: ${this.props.desiredLang}`}
+          <textarea rows="4" cols="25" placeholder={`Source Language: ${this.props.sourceLang}`}
             onChange={(e)=>this.props.translationHandler(e)}
             />
           <button onClick={null}/>
@@ -19,7 +19,7 @@ class TranslationContainer extends Component {
 
 
         <div>
-          <textarea rows="4" cols="25" placeholder={`Desired Language: ${this.props.sourceLang}`}
+          <textarea rows="4" cols="25" placeholder={`Desired Language: ${this.props.desiredLang}`}
             value={this.props.translationText}
             onChange={null}
 

@@ -70,7 +70,7 @@ class MainContent extends Component {
     this.setState({translationText: input})
   }
 
-  getLangDirection(){
+  getLangDirection =()=> {
 
     let state = this.state
     console.log(state);
@@ -85,44 +85,45 @@ class MainContent extends Component {
       // case native === 'English':
       //   start = 'en'
       //   break;
-      case native === 'Spanish':
+      case 'Spanish':
         start = 'es'
         break;
-      case native === 'French':
+      case 'French':
         start = 'fr'
         break;
-      case native === 'Portuguese':
+      case 'Portuguese':
         start = 'pt'
         break;
-      case native === 'Italian':
+      case 'Italian':
         start = 'it'
         break;
-      case native === 'German':
-        start = 'ge'
+      case 'German':
+        start = 'de'
         break;
-      default: start = 'en'
+      default:
+        start = 'en'
     }
 
     switch (desired) {
-      case desired === 'English':
-        finish = 'en'
-        break;
-      case desired === 'Spanish':
+      case 'Spanish':
         finish = 'es'
         break;
-      case desired === 'French':
+      case 'French':
         finish = 'fr'
         break;
-      case desired === 'Portuguese':
+      case 'Portuguese':
         finish = 'pt'
         break;
-      case desired === 'Italian':
+      case 'Italian':
+      debugger
         finish = 'it'
+      debugger
         break;
-      case desired === 'German':
-        finish = 'ge'
+      case 'German':
+        finish = 'de'
         break;
       default:
+        finish = "en"
     }
 
   result = `${start}-${finish}`
@@ -137,14 +138,14 @@ class MainContent extends Component {
 
     let text = this.state.translationText
 
-    let lang;
+    let lang = this.getLangDirection()
 
-    // NEEDS TO BE MORE DYNAMIC TO ACCOMODATE MULTIPLE LANGUAGES
-    if (this.state.currentUser.desired_language === "English"){
-      lang = `en-es`
-    } else {
-      lang = `es-en`
-    }
+    // // NEEDS TO BE MORE DYNAMIC TO ACCOMODATE MULTIPLE LANGUAGES
+    // if (this.state.currentUser.desired_language === "English"){
+    //   lang = `en-es`
+    // } else {
+    //   lang = `es-en`
+    // }
 
     debugger
     let format = `plain`
@@ -277,11 +278,14 @@ class MainContent extends Component {
       //this method should perform a PUT fetch to the backend
     // Get Current User id
     let userId = this.state.currentUser.id
+    let userInfo = this.state.currentUser
+
+
     // Get all form values from this.state
-    let first = this.state.inputFirstName
-    let last = this.state.inputLastName
-    let native = this.state.inputNative
-    let desired =this.state.inputDesired
+    let first = this.state.inputFirstName.length != 0 ? this.state.inputFirstName : userInfo.first_name
+    let last = this.state.inputLastName.length != 0 ? this.state.inputLastName : userInfo.last_name
+    let native = this.state.inputNative.length != 0 ? this.state.inputNative : userInfo.native_language
+    let desired =this.state.inputDesired.length !=0 ? this.state.inputDesired : userInfo.desired_language
 
     let data = {
       desired_language: desired,
@@ -292,14 +296,17 @@ class MainContent extends Component {
     debugger
 
     fetch(`http://localhost:3000/users/${userId}`,{
-      method: 'PUT',
+      method: 'PATCH',
       body: JSON.stringify(data),
       headers:{
 
       'Content-Type': 'application/json'
     }
   }).then(res=> res.json())
-  .then(response => console.log('Success:', JSON.stringify(response)))
+  .then(newUserInfo => {
+    console.log('Success:', JSON.stringify(newUserInfo));
+    this.setState({currentUser: newUserInfo})
+  })
   .catch(error => console.error('Error:', error));
 
   this.toggleModal()
@@ -343,12 +350,10 @@ class MainContent extends Component {
             inputNative={this.state.inputNative}
             inputDesired={this.state.inputDesired}
             updateUser={this.updateUser}
+            toggleModal={this.toggleModal}
           />
         </ModalBody>
-        <ModalFooter>
-          <Button color="primary" >Update</Button>
-          <Button color="secondary" onClick={()=>this.toggleModal()}>Cancel</Button>
-        </ModalFooter>
+
       </Modal>
 
         <MessageContainer
