@@ -19,25 +19,34 @@ class MessagesBox extends Component {
     console.log(this.props);
     return(
       <div className="messagesBox">
-        {this.props.selectedUser.id ? this.props.messages.map((msg)=>{
-          return (
-            this.props.currentUser.id === msg.sender_id ?
+        {this.props.selectedUser ? this.props.messages.map((msg)=>{
 
-            <div className="container">
-              <img src="http://icons.iconarchive.com/icons/papirus-team/papirus-status/64/avatar-default-icon.png" alt="Avatar"/>
-              <p>{msg.text_body}</p>
-              <span className="time-right">{this.formatTime(msg.created_at)}</span>
-            </div>
+          if(this.props.currentUser.id === msg.sender_id ){
+            return (
 
-          :
 
-          <div className="container darker">
-            <img src="http://icons.iconarchive.com/icons/papirus-team/papirus-status/64/avatar-default-icon.png" alt="Avatar"/>
-            <p>{msg.text_body}</p>
-            <span className="time-right">{this.formatTime(msg.created_at)}</span>
-          </div>
+              <div className="container">
+                <img src="http://icons.iconarchive.com/icons/papirus-team/papirus-status/64/avatar-default-icon.png" alt="Avatar"/>
+                <p>Me:</p> <p>{msg.text_body}</p>
+                <span className="time-right">{null}</span>
+              </div>
+            )
+          } else {
+            return (
+              <div className="container darker">
+                <img src="http://icons.iconarchive.com/icons/papirus-team/papirus-status/64/avatar-default-icon.png" alt="Avatar"/>
+                <p>{msg.text_body}</p>
+                <span className="time-right">{null}</span>
+              </div>
+            )
+          }
 
-        )
+
+
+
+
+
+
 
       })
     :  null}
@@ -68,3 +77,26 @@ export default MessagesBox
 //   text={msg.text_body}
 //   deleteMessage={this.props.deleteMessage}
 // />
+
+// this.props.selectedUser.id ? this.props.messages.map((msg)=>{
+//   return (
+//     this.props.currentUser.id === msg.sender_id ?
+//
+//     <div className="container">
+//       <img src="http://icons.iconarchive.com/icons/papirus-team/papirus-status/64/avatar-default-icon.png" alt="Avatar"/>
+//       <p>{msg.text_body}</p>
+//       <span className="time-right">{this.formatTime(msg.created_at)}</span>
+//     </div>
+//
+//   :
+//
+//   <div className="container darker">
+//     <img src="http://icons.iconarchive.com/icons/papirus-team/papirus-status/64/avatar-default-icon.png" alt="Avatar"/>
+//     <p>{msg.text_body}</p>
+//     <span className="time-right">{this.formatTime(msg.created_at)}</span>
+//   </div>
+//
+// )
+//
+// })
+// :  null

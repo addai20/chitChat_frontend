@@ -23,10 +23,7 @@ class MessageContainer extends Component{
           onChange={(event)=>this.props.messageHandler(event)} value={this.props.currentMessage}
           />
             <div className="input-group-append">
-              <button className="btn btn-outline-secondary" type="button" onClick={()=>this.props.messageSender()} id="button-addon2">Send</button>
-            </div>
-            <div className="input-group-append">
-              <button className="btn btn-outline-secondary" type="button" onClick={()=>this.props.messageSender()} id="button-addon2">Save Word</button>
+              <button className="btn btn-outline-success my-2 my-sm-0" type="button" onClick={()=>this.props.messageSender()} id="button-addon2">Send</button>
             </div>
         </div>
         <TranslationContainer

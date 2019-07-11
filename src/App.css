@@ -2,6 +2,7 @@
   text-align: center;
   max-height: 100%;
   max-width: 100%;
+  background-image: url('https://i.imgur.com/nrO0mlTh.png');
 }
 
 .App-logo {
@@ -95,7 +96,11 @@
 
 .friendsList {
 padding-top: 2%;
+padding-right: 2%;
+
 width: 25%;
+border-width: 2px;
+border: #dedede;
 /* height: 1%; */
 overflow-y: scroll;
 max-height: 60vh;
@@ -121,19 +126,19 @@ max-height: 60vh;
   margin: 10px 0;
 }
 
-/* .darker {
-  border-color: #ccc;
-  background-color: #ddd;
-} */
-
 .darker {
+  border-color: #ccc;
+  background-color: #9E9E9E;
+}
+
+/* .darker {
   display: flex;
   justify-content: space-between;
-  flex-direction: row;
+  flex-direction: row-reverse;
   border: 2px solid #dedede;
   border-color: #ccc;
   background-color: #ddd;
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
-}
+} */

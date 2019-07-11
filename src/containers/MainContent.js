@@ -48,6 +48,7 @@ class MainContent extends Component {
         messages: messages,
         masterMessages: messages,
         allUsers: allUsers,
+        selectedUser: allUsers[0],
       })
     })
   }
